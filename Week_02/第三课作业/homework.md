@@ -22,6 +22,38 @@ SerialGC（3G）、ParallelGC(2G) 、CMCGC(1G)、G1GC(10G)
 
 
 # **2.（选做）使用压测工具（wrk 或 sb），演练 gateway-server-0.0.1-SNAPSHOT.jar 示例。**
+### **使用默认GC（ParallelGC）**
+#####启动参数： java -jar -Xmx2g -Xms2g -XX:+PrintGCDetails -XX:+PrintGCDateStamps gateway-server-0.0.1-SNAPSHOT.jar
+
+#####压测命令：sb -u http://localhost:8088/api/hello -c 10 -N 30， 10个并发， 压测30s
+
+#####压测结果：
+######&emsp;Requests: 23997
+######&emsp;RPS: 772.1
+######&emsp;90th Percentile: 6ms
+######&emsp;95th Percentile: 9ms
+######&emsp;99th Percentile: 21ms
+######&emsp;Average: 2.7ms
+######&emsp;Min: 0ms
+######&emsp;Max: 425ms
+
+
+### **使用默认G1GC（ParallelGC）**
+#####启动参数：  java -jar -Xmx2g -Xms2g -XX:+UseG1GC -XX:+PrintGCDetails -XX:+PrintGCDateStamps gateway-server-0.0.1-SNAPSHOT.jar
+
+#####压测命令：sb -u http://localhost:8088/api/hello -c 10 -N 30， 10个并发， 压测30s
+
+#####压测结果：
+######&emsp;Requests: 25347
+######&emsp;RPS: 813.7
+######&emsp;90th Percentile: 6ms
+######&emsp;95th Percentile: 9ms
+######&emsp;99th Percentile: 20ms
+######&emsp;Average: 2.8ms
+######&emsp;Min: 0ms
+######&emsp;Max: 2098ms
+
+### 结论：设置堆内存2G的情况下，整体吞吐量 ParallelGC和G1GC差不多。
 
 # **4.（必做）根据上述自己对于 1 和 2 的演示，写一段对于不同 GC 和堆内存的总结，提交到 GitHub。**
 
