@@ -35,7 +35,7 @@ public class Config {
     }
 
     /**
-     * 这里加了ConditionalOnBean注解，就代表如果student存在才实例化people
+     * 这里加了ConditionalOnBean注解，就代表如果klass存在才实例化school
      */
     @Bean
     @ConditionalOnBean(name = "klass")
