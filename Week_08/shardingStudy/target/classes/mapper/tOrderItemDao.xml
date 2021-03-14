@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 这里填写对应的Dao文件所在的路径 -->
+<mapper namespace="com.example.shardingStudy.dao.tOrderItemDao"    >
+    <!-- 填写数据库里实例Person对应的表的表名 -->
+    <!-- 这里是作为一个变量使用 -->
+    <sql id="table">t_order_item</sql>
+
+    <!-- 增 -->
+    <insert id="insert" parameterType="com.example.shardingStudy.model.tOrderItem">
+        INSERT INTO
+        <include refid="table"/>
+        (order_id,user_id,STATUS)
+        VALUES
+        (${orderId},${userId},${STATUS})
+    </insert>
+
+</mapper>

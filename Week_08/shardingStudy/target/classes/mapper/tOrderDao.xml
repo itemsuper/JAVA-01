@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 这里填写对应的Dao文件所在的路径 -->
+<mapper namespace="com.example.shardingStudy.dao.tOrderDao"    >
+    <!-- 填写数据库里实例Person对应的表的表名 -->
+    <!-- 这里是作为一个变量使用 -->
+    <sql id="table">t_order</sql>
+
+    <!-- id属性填写Dao文件里的函数名称 xxType是参数或是结果的类型根据情况填写 -->
+    <!-- 查询所有   -->
+    <select id="getAll" resultType="com.example.shardingStudy.model.tOrder">
+        SELECT
+        *
+        FROM
+        <include refid="table" />
+    </select>
+
+
+    <!-- 根据id查询 -->
+    <select id="getOrderByID" resultType="com.example.shardingStudy.model.tOrder">
+        SELECT
+        order_id as orderId,
+        user_id as userId,
+        status
+        FROM
+        <include refid="table"/>
+        WHERE
+        order_id = #{id}
+    </select>
+
+    <!-- 增 -->
+    <insert id="insert" parameterType="com.example.shardingStudy.model.tOrder">
+        INSERT INTO
+        <include refid="table"/>
+        (user_id,STATUS)
+        VALUES
+        (${userId},${STATUS})
+    </insert>
+
+    <!-- 改 -->
+    <update id="update" parameterType="com.example.shardingStudy.model.tOrder">
+        UPDATE
+        <include refid="table"/>
+        SET
+        user_id  = #{userId},status = #{status}
+        WHERE
+        order_id = #{orderId}
+    </update>
+
+    <!-- 删 -->
+    <delete id="delete" parameterType="com.example.shardingStudy.model.tOrder">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        order_id = #{orderId}
+    </delete>
+</mapper>
